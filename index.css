@@ -1,0 +1,11 @@
+ul{
+    list-style-type: none;
+}
+.app{
+    display: flex;
+}
+.data{
+    width: 400px;
+    height: 400px;
+    background-color: aquamarine;
+}
