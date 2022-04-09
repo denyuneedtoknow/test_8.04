@@ -1,35 +1,75 @@
 import refs from './refs.js'
 
-const data=[]
+let data = []
 
-const addingPair = (input) =>{
-const pair = input.split('=')
-const elName =pair[0]
-const elValue=pair[1]
-const elData={[elName]:elValue}
-data.push(elData)
-// const dataString = document.createElement("li");
-// dataString.textContent = `${elName}=${elValue}`
-// refs.dataSheet.append(dataString)
-console.log(data[0]);
-const markup = data
-  .map((dataElement) => {
-    // console.log(Object.keys(dataElement));  
-    return `<li class="list-item">${Object.keys(dataElement)}=${Object.value(dataElement)}</li>`})
-  .join("");
+const addingPair = (input) => {
+  const pair = input.split('=')
+  const elName = pair[0].trim('')
+  const elValue = pair[1].trim('')
+  const elData = { name: elName, value: elValue }
+  data.push(elData)
+  rendering(data)
+}
+
+const rendering =(data)=>{
+  const markup=data
+    .map((dataElement) => {
+      return `<li class="listItem">${(dataElement.name)}=${(dataElement.value)}</li>`
+    })
+    .join("");
   refs.dataSheet.innerHTML = markup;
-
 }
 
 
-
-
-const addingData=(e) =>{
-    e.preventDefault();
-    const input = refs.input.value;
-    addingPair(input)
-    refs.input.value =''
- 
+const deleting = () => {
+  const item_checked = document.getElementsByClassName('checked')[0];
+  const dataKey = item_checked.textContent.split('=')[0]
+  const newArray = []
+  data.forEach(object => {
+    if (object.name !== dataKey) {
+      newArray.push(object)
+    } return newArray
+  })
+  data = newArray
+  rendering(data)
 }
 
-refs.addBtn.addEventListener('click',addingData )
+const sortingByKey = (e) => {
+  const key = e.target.id
+
+  const sortedBy = sortByKey(data, key)
+
+rendering(sortedBy)
+
+}
+
+function sortByKey(array, key) {
+  return array.sort(function (a, b) {
+    const x = a[key];
+    const y = b[key];
+    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+  });
+}
+
+const itemPicker = (e) => {
+  if (!e.target.classList.contains('checked')) {
+    e.target.classList.add('checked')
+  } else { e.target.classList.remove('checked') }
+
+  console.log(e.target);
+}
+
+const addingData = (e) => {
+  e.preventDefault();
+  const input = refs.input.value;
+  addingPair(input)
+  refs.input.value = ''
+}
+
+
+refs.addBtn.addEventListener('click', addingData)
+refs.sortByNameBtn.addEventListener('click', sortingByKey)
+refs.sortByValueBtn.addEventListener('click', sortingByKey)
+
+refs.dataSheet.addEventListener('click', itemPicker);
+refs.deleteBtn.addEventListener('click', deleting)

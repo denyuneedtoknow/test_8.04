@@ -1,5 +1,7 @@
 ul{
     list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 .app{
     display: flex;
@@ -8,4 +10,13 @@ ul{
     width: 400px;
     height: 400px;
     background-color: aquamarine;
+}
+.listItem{
+    border: 1px solid white;
+    padding: 2px;
+    margin: 0px 5px 3px 5px;
+
+}
+.checked{
+    border: 2px solid blue
 }
