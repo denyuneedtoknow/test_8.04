@@ -22,13 +22,28 @@ const rendering =(data)=>{
 
 
 const deleting = () => {
-  const item_checked = document.getElementsByClassName('checked')[0];
-  const dataKey = item_checked.textContent.split('=')[0]
-  const newArray = []
+  const item_checked = [...document.getElementsByClassName('checked')];
+console.log(item_checked);
+
+const ArrayToDelete =[]  
+const newArray = []
+item_checked.forEach(item => {
+  ArrayToDelete.push(item.textContent.split('=')[0])
+  return ArrayToDelete
+})
+console.log(ArrayToDelete);
+ArrayToDelete.forEach(itemToDel=>{
+  console.log(itemToDel);
+
+})
+
+
+
   data.forEach(object => {
     if (object.name !== dataKey) {
       newArray.push(object)
-    } return newArray
+    }
+     return newArray
   })
   data = newArray
   rendering(data)
@@ -56,7 +71,6 @@ const itemPicker = (e) => {
     e.target.classList.add('checked')
   } else { e.target.classList.remove('checked') }
 
-  console.log(e.target);
 }
 
 const addingData = (e) => {
